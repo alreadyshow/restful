@@ -1,0 +1,67 @@
+<?php 
+//冒泡排序方法 
+function bubblesort($arr){ 
+    //定义一个变量保存交换的值 
+    $temp =0; 
+    for($i=0;$i<count($arr);$i++){ 
+        for($j=0;$j<count($arr)-$i-1;$j++){ 
+            if($arr[$j]>$arr[$j+1]){ 
+                //如果前面的那个数大于后面的那个数，那么他们就进行交换 
+                $temp=$arr[$j]; $arr[$j]=$arr[$j+1]; $arr[$j+1]=$temp; 
+            } 
+        } 
+    }
+    return $arr; 
+} 
+$arr=array(100,99,200,5,-4,6,-7); 
+print_r(bubbleSort($arr)); 
+
+
+//数组是值传递，所以传递的时候加个&符号就是地址传递，改变外部变量
+/*
+    递归调用实现二分法查找
+//$search 函数 $array为数组，$K为要找的值，$low为查找范围的最小键值，$high为查找范围的最大键值
+//intval返回整数值*/
+function search($array,$k,$low=0,$high=0){
+    //判断数组元素的数量
+    if(count($array)!=0 and $high==0){      //判断是否为第一次调用
+        //数组的元素个数
+        $high = count($array);
+    }
+    if($low <= $high){      //如果还存在剩余的数组元素
+        $mid = intval(($low+$high)/2);      //取$low 与$high的中间值
+        //return $array[$mid];
+        if($array[$mid] == $k){
+            return $mid;    //如果找到则返回
+        }elseif($k < $array[$mid]){
+            //如果上面没有找到，则继续查找
+            return search($array,$k,$low,$mid-1);
+        }else{
+            return search($array,$k,$mid+1,$high);
+        }
+    }
+    return "没有要查找的值";
+}
+$array = array(3,4,5,7,8,9,10);
+echo search($array,8);
+
+/*
+    //while循环实现二分法查找
+*/
+$arr = array(2,4,5,6,7,8,9,10);
+$low = 0;   //要查找范围的最小键值
+$search = 6;
+//计算出数组的长度
+$high = count($arr)-1;
+while($low <= $high){
+    //取得数组的中间键值
+    $mid = intval(($low+$high)/2);
+    if($arr[$mid]==$search){
+        //如果取出中间的下标值跟你要搜索的值相等的话，直接去除值得下标就行
+        echo "你要查找的值在数组内的下标为".$mid; break;
+    }elseif($arr[$mid] > $search){
+        $high = $mid -1;
+    }else{
+        $high = $mid+1;
+    }
+}
